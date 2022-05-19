@@ -1,11 +1,14 @@
 import 'dotenv/config'
 import { AppDataSource } from "./data-source"
 import { ApolloServer } from 'apollo-server-express'
-// import { buildSchema } from "type-graphql";
 import express from "express"
 import cookieParser from 'cookie-parser';
 import bodyParser from "body-parser";
 import cors from 'cors';
+import { buildSchema } from 'type-graphql';
+import { UserResolver } from './resolvers/userResolver';
+import { WorkerResolver } from './resolvers/workerResolver';
+import { CompanyResolver } from './resolvers/companyResolver';
 
 AppDataSource.initialize().then(async () => {
 
@@ -19,11 +22,13 @@ AppDataSource.initialize().then(async () => {
     }));
 
     const apolloServer = new ApolloServer({
-        // schema: await buildSchema({
-        //     resolvers: [
-                
-        //     ]
-        // }),
+        schema: await buildSchema({
+            resolvers: [
+               UserResolver,
+               WorkerResolver, 
+               CompanyResolver
+            ]
+        }),
         context: ({req, res}) => ({req, res}),
     });
 
@@ -34,27 +39,6 @@ AppDataSource.initialize().then(async () => {
     app.listen(process.env.BACKEND_PORT, ()=>{
         console.log(`Listening on port: ${process.env.BACKEND_PORT}`)
     });
-
-
-    // const app = express();
-    // const httpServer = https.createServer({
-    //     key: fs.readFileSync(path.resolve(__dirname, "ssl/dev/rootCA-key.pem")), // ssl/dev/wfm-backend-key.pem
-    //     cert: fs.readFileSync(path.resolve(__dirname, "ssl/dev/rootCA.pem")) // 
-    // },
-    // app);
-    // const server = new ApolloServer({
-    //     schema: await buildSchema({
-    //         resolvers: [
-    //             UserResolver
-    //         ]
-    //     }),
-    //     context: ({req, res}) => ({req, res}),
-    //     plugins: [ApolloServerPluginDrainHttpServer({httpServer})]
-    // });
-    // await server.start();
-    // server.applyMiddleware({ app });
-    // await new Promise<void>(resolve => httpServer.listen({ port: 3001 }, resolve));
-    // console.log(`🚀 Server ready at https://localhost:3001${server.graphqlPath}`);
 
 })
 .catch(error => {

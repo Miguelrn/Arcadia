@@ -1,29 +1,52 @@
 import { Field, ID, ObjectType } from "type-graphql";
 import { GraphQLJSONObject } from 'graphql-type-json';
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne } from "typeorm";
+import { Entity, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, BaseEntity, PrimaryColumn } from "typeorm";
 import { Company } from "./Company";
 
 @ObjectType()
 @Entity('worker')
-export class Worker {
+export class Worker extends BaseEntity {
     @Field(() => ID)
-    @PrimaryGeneratedColumn()
+    @PrimaryColumn({type: Number}) // we will store same id as the API
     id: number
 
     @Field(() => String)
     @Column('text', {unique: true})
-    usercode: string;
+    username: string;
 
     @Field(() => String)
     @Column('text')
     name: string;
 
-    @Field(() => GraphQLJSONObject)
-    @Column({ type: 'json'})
-    others: JSON; 
-// TODO: añadir las cosas mas destacables del worker y latitud longitud, resto van al campo others
+    @Field(() => String)
+    @Column('text')
+    surname: string;
 
-    @Field(() => Company)
+    @Field(() => String)
+    @Column('text', {unique: true})
+    email: string;
+
+    @Field(() => String)
+    @Column('text')
+    avatar: string;
+
+    @Field(() => String)
+    @Column('text')
+    gender: string;
+
+    @Field(() => String)
+    @Column('text')
+    phone: string;
+
+    @Field(() => Date)
+    @Column({type: Date})
+    birthdate: Date;
+
+    @Field(() => GraphQLJSONObject)
+    @Column({ type: 'jsonb'})
+    others?: Object; // just to store rest of the user data, just in case
+
+    @Field(() => Company, {nullable: true})
     @ManyToOne(() => Company, (company) => company.workers)
     company: Company;
 

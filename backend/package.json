@@ -21,7 +21,7 @@
       "dotenv": "^16.0.1",
       "esm": "^3.2.25",
       "express": "^4.18.1",
-      "graphql": "^16.5.0",
+      "graphql": "15.7.2",
       "graphql-type-json": "^0.3.2",
       "jsonwebtoken": "^8.5.1",
       "pg": "^8.4.0",
@@ -30,7 +30,8 @@
       "typeorm": "0.3.6"
    },
    "scripts": {
-      "start": "ts-node src/index.ts",
+      "start": "nodemon -L --exec ts-node -r esm  src/index.ts",
+      "watch": "tsc -w",
       "typeorm": "typeorm-ts-node-commonjs"
    }
 }

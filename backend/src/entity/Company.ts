@@ -1,27 +1,42 @@
 import { Field, ID, ObjectType } from "type-graphql";
 import { GraphQLJSONObject } from 'graphql-type-json';
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from "typeorm";
+import { Entity, Column, CreateDateColumn, UpdateDateColumn, OneToMany, BaseEntity, PrimaryColumn } from "typeorm";
 import { Worker } from './Worker'
 
 @ObjectType()
 @Entity('company')
-export class Company {
+export class Company extends BaseEntity {
     @Field(() => ID)
-    @PrimaryGeneratedColumn()
+    @PrimaryColumn({type: Number}) // we will store same id as the API
     id: number
 
     @Field(() => String)
     @Column('text', {unique: true})
-    usercode: string;
+    company: string;
 
     @Field(() => String)
     @Column('text')
-    name: string;
+    industry: string;
+
+    @Field(() => String)
+    @Column('text')
+    catch_phrase: string;
+    
+    @Field(() => String)
+    @Column('text')
+    logo: string;
+
+    @Field(() => String)
+    @Column('text')
+    type: string;
+
+    @Field(() => String)
+    @Column('text')
+    phone: string;
 
     @Field(() => GraphQLJSONObject)
-    @Column({ type: 'json'})
-    others: JSON; 
-// TODO: añadir las cosas mas destacables del worker y latitud longitud, resto van al campo others, añadir la relacion onetomany
+    @Column({ type: 'jsonb'})
+    others?: object; 
 
     @Field(() => [Worker])
     @OneToMany(() => Worker, (worker) => worker.company)
