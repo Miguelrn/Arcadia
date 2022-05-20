@@ -9,10 +9,15 @@ import { buildSchema } from 'type-graphql';
 import { UserResolver } from './resolvers/userResolver';
 import { WorkerResolver } from './resolvers/workerResolver';
 import { CompanyResolver } from './resolvers/companyResolver';
+import { verify } from 'jsonwebtoken';
+import { User } from './entity/User';
+import { createAccessToken, createRefreshToken, sendRefreshToken } from './auth';
+
 
 AppDataSource.initialize().then(async () => {
 
     //create express app
+    await AppDataSource.runMigrations(); // yarn run typeorm migration:create initialRandomData
     const app = express()
     app.use(bodyParser.json())
     app.use(cookieParser());
@@ -20,6 +25,26 @@ AppDataSource.initialize().then(async () => {
         credentials: true,
         origin: ['http://localhost:3000', 'https://studio.apollographql.com']
     }));
+
+    app.post("/refresh_token", async (req, res) => {
+        const token = req.cookies.jid;
+        if(!token) return res.send({ok: false, accesstoken: ''})
+
+        let payload: any = null;
+        try {
+            payload = verify(token, process.env.REFRESH_TOKEN!);
+
+        } catch (e) {
+            console.log(e)
+        };
+
+        const user = await User.findOne({where: {id: payload.userId}});
+        if(!user) return res.send({ok: false, accesstoken: ''})
+
+        sendRefreshToken(res, createRefreshToken(user));
+        
+        return res.send({ok: true, accesstoken: createAccessToken(user)})
+    });
 
     const apolloServer = new ApolloServer({
         schema: await buildSchema({

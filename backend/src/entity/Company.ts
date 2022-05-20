@@ -12,11 +12,11 @@ export class Company extends BaseEntity {
 
     @Field(() => String)
     @Column('text', {unique: true})
-    company: string;
+    company: string; // important
 
     @Field(() => String)
     @Column('text')
-    industry: string;
+    industry: string; // important
 
     @Field(() => String)
     @Column('text')
@@ -28,7 +28,7 @@ export class Company extends BaseEntity {
 
     @Field(() => String)
     @Column('text')
-    type: string;
+    type: string; // important
 
     @Field(() => String)
     @Column('text')

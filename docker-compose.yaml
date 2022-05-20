@@ -26,6 +26,7 @@ services:
       - "3001:${BACKEND_PORT}"
     volumes:
       - ./backend:/backend
+      - /backend/node_modules # anonymous volume for node_modules only
 
   # frontend:
   #   image: arcadia_frontend

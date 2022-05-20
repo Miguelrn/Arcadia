@@ -1,15 +1,18 @@
-import { Mutation, Query, Resolver } from 'type-graphql';
+import { Arg, Mutation, Query, Resolver, UseMiddleware } from 'type-graphql';
 import { fetch } from 'apollo-server-env';
 import { Worker } from '../entity/Worker';
+import { isAuth } from '../isAuthMiddleware';
+import { Company } from '../entity/Company';
 
 
 @Resolver()
 export class WorkerResolver {
     /**
-* Actual list of all the users enabled
-* @returns List of users
-*/
+     * Actual list of all the users enabled
+     * @returns List of users
+     */
     @Query(() => [Worker])
+    @UseMiddleware(isAuth)
     async workers(): Promise<Worker[]> {
         return await Worker.find({ where: { disabled: false } });
     }
@@ -19,6 +22,7 @@ export class WorkerResolver {
      * @returns List of users
      */
     @Query(() => [Worker])
+    @UseMiddleware(isAuth)
     async joblessWorkers(): Promise<Worker[]> {
         return await Worker.find({ where: { disabled: false, company: undefined} });
     }
@@ -29,6 +33,7 @@ export class WorkerResolver {
      * @returns random worker that has been created
      */
     @Mutation(() => Worker)
+    @UseMiddleware(isAuth)
     async createWorker(): Promise<Worker> {
         let validUser = false;
         let worker = null;
@@ -66,36 +71,21 @@ export class WorkerResolver {
         return newWorker;
     }
 
-    // @Mutation(() => Boolean)
-    // async asignCompany(
-    //     @Arg("identifier", () => String) identifier: string,
-    //     @Arg("projectName", () => String) projectName: string,
-    // ): Promise<boolean> {
-    //     const user = await User.findOne({ where: { userId: identifier } });
-    //     const project = await Project.findOne({ where: { name: projectName }, relations: ['workers'] });
-    //     if (!user || !project) throw new Error('User or project does not exits');
+    @Mutation(() => Boolean)
+    @UseMiddleware(isAuth)
+    async asignCompany(
+        @Arg("userId", () => Number) userId: number,
+        @Arg("companyId", () => Number) companyId: number,
+    ): Promise<boolean> {
+        const user = await Worker.findOne({ where: { id: userId }, relations: ['company'] });
+        const project = await Company.findOne({ where: { id: companyId }, relations: ['workers'] });
+        if (!user || !project) throw new Error('User or company does not exits');
 
-    //     project.workers?.push(user);
-    //     await project.save();
-    //     return true;
-    // }
+        if(user.company !== null) throw new Error('User already have a job, please leave your actual job before join a new company!')
 
-    // @Mutation(() => Boolean)
-    // async revokeRefreshTokenForUser(@Arg("userId", () => Int) userId: number) {
-    //   await getConnection()
-    //     .getRepository(User)
-    //     .increment({ id: userId }, "tokenVersion", 1);
-
-    //     return true;
-    // }
-
-    // @Query(() => String)
-    // @UseMiddleware(isAuth)
-    // bye(
-    //   @Ctx() { payload } : MyContext
-    // ) {
-    //   return "Bye " + payload!.userId;
-    // }
-
+        project.workers?.push(user); 
+        await project.save();
+        return true;
+    }
 
 }

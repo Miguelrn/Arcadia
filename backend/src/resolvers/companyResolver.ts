@@ -1,17 +1,19 @@
-import { Mutation, Query, Resolver } from 'type-graphql';
+import { Mutation, Query, Resolver, UseMiddleware } from 'type-graphql';
 import { fetch } from 'apollo-server-env';
 import { Company } from '../entity/Company';
+import { isAuth } from '../isAuthMiddleware';
 
 
 @Resolver()
 export class CompanyResolver {
     /**
-        * Actual list of all the companies enabled
-        * @returns List of companies
-    */
+     * Actual list of all the companies enabled
+     * @returns List of companies
+     */
     @Query(() => [Company])
+    @UseMiddleware(isAuth)
     async companies(): Promise<Company[]> {
-        return await Company.find({ where: { disabled: false } });
+        return await Company.find({ where: { disabled: false }, relations: ['workers'] });
     }
 
     /**
@@ -20,6 +22,7 @@ export class CompanyResolver {
      * @returns random company that has been created
      */
     @Mutation(() => Company)
+    @UseMiddleware(isAuth)
     async createCompany(): Promise<Company> {
         let validCompany = false;
         let company = null;
@@ -58,37 +61,4 @@ export class CompanyResolver {
 
         return newCompany;
     }
-
-    // @Mutation(() => Boolean)
-    // async asignCompany(
-    //     @Arg("identifier", () => String) identifier: string,
-    //     @Arg("projectName", () => String) projectName: string,
-    // ): Promise<boolean> {
-    //     const user = await User.findOne({ where: { userId: identifier } });
-    //     const project = await Project.findOne({ where: { name: projectName }, relations: ['workers'] });
-    //     if (!user || !project) throw new Error('User or project does not exits');
-
-    //     project.workers?.push(user);
-    //     await project.save();
-    //     return true;
-    // }
-
-    // @Mutation(() => Boolean)
-    // async revokeRefreshTokenForUser(@Arg("userId", () => Int) userId: number) {
-    //   await getConnection()
-    //     .getRepository(User)
-    //     .increment({ id: userId }, "tokenVersion", 1);
-
-    //     return true;
-    // }
-
-    // @Query(() => String)
-    // @UseMiddleware(isAuth)
-    // bye(
-    //   @Ctx() { payload } : MyContext
-    // ) {
-    //   return "Bye " + payload!.userId;
-    // }
-
-
 }
