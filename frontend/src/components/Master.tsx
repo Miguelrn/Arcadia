@@ -143,7 +143,7 @@ export default function Master() {
                 </IconButton>
               </Grid>
               <Grid item xs={11}>
-                <ImageList >
+                <ImageList component={Link} href="/">
                   <img
                     width="150" height="auto"
                     src={`./src/logo.png`}
@@ -153,7 +153,6 @@ export default function Master() {
               </Grid>
             </Grid>
             <Grid item xs={4} container direction="row" justifyContent="flex-end" alignItems="center">
-
                 <IconButton color="inherit"  onClick={() => window.open("https://github.com/tziea/Full-Stack-Developer/blob/main/README.md", "_blank")}>
                   <GitHubIcon />
                 </IconButton>
