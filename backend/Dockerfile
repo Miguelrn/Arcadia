@@ -10,6 +10,6 @@ RUN yarn install
 COPY . /backend/
 # COPY src/data-source.docker.ts ./src/data-source.ts
 
-EXPOSE 3001
+EXPOSE ${BACKEND_PORT}
 # ENV TSC_WATCHFILE "UseFsEventsWithFallbackDynamicPolling"
 CMD ["yarn", "start"]
