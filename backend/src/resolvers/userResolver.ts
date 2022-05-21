@@ -14,11 +14,11 @@ class LoginResponse {
 @Resolver()
 export class UserResolver {
   /**
-   * 
+   * Get the actually list of users of the server
    * @returns List of users
    */
   @Query(() => [User])
-  @UseMiddleware(isAuth)
+  // @UseMiddleware(isAuth)
   async users(): Promise<User[]> {
     return await User.find();
   }

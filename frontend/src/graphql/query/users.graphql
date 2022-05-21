@@ -1,0 +1,9 @@
+query Users {
+  users {
+    id
+    usercode
+    password
+    name
+    disabled
+  }
+}

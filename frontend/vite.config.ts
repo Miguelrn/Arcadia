@@ -1,14 +1,12 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import 'dotenv/config';
-import { fileURLToPath } from 'url';
+import 'dotenv/config'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  resolve: { alias: { '@': '/src' } },
   server: {
       host: true,
-      port: Number.parseInt(process.env.FRONTEND_PORT!),
+      port: Number.parseInt(process.env.VITE_FRONTEND_PORT), // TODO: cannot access to import.meta.env.VITE_BACKEND_PORT
       watch: {
         usePolling: true
       }
