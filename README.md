@@ -28,3 +28,7 @@ In order to be able to store a valid login user, we will be creating two jsonweb
 
 Some of the endpoints will check for a valid jsonwebtoken, to prevent unauthorized user use this endpoints. Also carefull if your browser is not saving cookies from localhost.
 
+## Workflow
+There will be a left menu with the most important pages of the website, all of them are protected, so if the user is not login there will be redirect to the login page. If the user have cookie from previous visits, it will generate a accesstoken and the user will no need to login again. 
+
+Edit worker / company, by clicking any of the card, modal window will popup with all the relative information. For simplicity some of the fields are disabled by default in order to avoid extra checks (unique fields like email or username).

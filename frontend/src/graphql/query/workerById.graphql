@@ -1,0 +1,17 @@
+query workerById($workerId: Float!) {
+  workerById(workerId: $workerId) {
+    id
+    username
+    name
+    surname
+    email
+    avatar
+    gender
+    phone
+    birthdate
+    others
+    disabled
+    created_at
+    updated_at
+  }
+}

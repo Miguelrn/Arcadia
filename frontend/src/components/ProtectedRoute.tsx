@@ -16,7 +16,7 @@ export default function ProtectedRoute({component: Component, ...props}: Protect
     const {accessToken} = useContext(UserContext);
 
     if (!accessToken) return (<Login />)
-console.log({accessToken})
+
     let decoded = jwt_decode<JwtPayload>(accessToken)
     let exp_date = decoded.exp
     if(exp_date && (new Date() > new Date(exp_date * 1000)) ) return (<Login />)

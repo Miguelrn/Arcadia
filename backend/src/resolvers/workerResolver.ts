@@ -3,6 +3,7 @@ import { fetch } from 'apollo-server-env';
 import { Worker } from '../entity/Worker';
 import { isAuth } from '../isAuthMiddleware';
 import { Company } from '../entity/Company';
+import moment from 'moment';
 
 
 @Resolver()
@@ -15,6 +16,18 @@ export class WorkerResolver {
     @UseMiddleware(isAuth)
     async workers(): Promise<Worker[]> {
         return await Worker.find({ where: { disabled: false } });
+    }
+
+    /**
+     * Find worker by its id
+     * @returns worker
+     */
+    @Query(() => Worker, {nullable: true})
+    @UseMiddleware(isAuth)
+    async workerById(
+        @Arg("workerId", () => Number) workerId: number,
+    ): Promise<Worker | null> {
+        return await Worker.findOne({ where: { id: workerId, disabled: false } });
     }
 
     /**
@@ -85,6 +98,70 @@ export class WorkerResolver {
 
         project.workers?.push(user); 
         await project.save();
+        return true;
+    }
+
+    /**
+     * Update fields of a given worker
+     * @param workerId 
+     * @param username 
+     * @param name 
+     * @param surname 
+     * @param email 
+     * @param avatar 
+     * @param gender 
+     * @param phone 
+     * @param birthdate 
+     * @param others 
+     * @returns 
+     */
+    @Mutation(() => Boolean)
+    @UseMiddleware(isAuth)
+    async updateWorker(
+        @Arg("workerId", () => Number) workerId: number,
+        @Arg("username", () => String) username: string,
+        @Arg("name", () => String) name: string,
+        @Arg("surname", () => String) surname: string,
+        @Arg("email", () => String) email: string,
+        @Arg("avatar", () => String) avatar: string,
+        @Arg("gender", () => String) gender: string,
+        @Arg("phone", () => String) phone: string,
+        @Arg("birthdate", () => String) birthdate: string,
+        @Arg("others", () => String) others: string,
+    ): Promise<boolean> {
+        const user = await Worker.findOne({ where: { id: workerId }, relations: ['company'] });
+        if (!user) throw new Error('User does not exits');
+
+        user.username = username;
+        user.name = name;
+        user.surname = surname;
+        user.email = email;
+        user.avatar = avatar;
+        user.gender = gender;
+        user.phone = phone;
+        user.birthdate = moment(birthdate, 'YYYY/MM/DD').toDate();
+        user.others = JSON.parse(others);
+        
+        await user.save();
+        return true;
+    }
+
+    /**
+     * logical deletion
+     * @param workerId worker id
+     * @returns 
+     */
+    @Mutation(() => Boolean)
+    @UseMiddleware(isAuth)
+    async disableWorker(
+        @Arg("workerId", () => Number) workerId: number,
+    ): Promise<boolean> {
+        const user = await Worker.findOne({ where: { id: workerId } });
+        if (!user) throw new Error('User does not exits');
+
+        user.disabled = true;
+        
+        await user.save();
         return true;
     }
 
