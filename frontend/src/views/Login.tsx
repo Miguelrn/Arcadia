@@ -28,7 +28,7 @@ export default function Login() {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const auxToken = await signin({variables: {password, usercode}});
-        // console.log(auxToken);
+        
         localStorage.setItem('accessToken', auxToken.data!.login.accessToken)
         setAccessToken(auxToken.data!.login.accessToken);
         navigate('/');

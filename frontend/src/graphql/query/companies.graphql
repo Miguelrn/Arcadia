@@ -7,10 +7,24 @@ query Companies {
     logo
     workers {
       id
-      username    
+      username
+      name
+      surname
+      email
+      avatar
+      gender
+      phone
+      birthdate
+      others
+      disabled
+      created_at
+      updated_at
     }
     type
     phone
     others
+    disabled
+    created_at
+    updated_at
   }
 }

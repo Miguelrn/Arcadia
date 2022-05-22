@@ -20,8 +20,8 @@ import ListItemText from '@mui/material/ListItemText';
 import AppRoutes from '../Routes';
 import Link from '@mui/material/Link';
 import { useState } from 'react';
-import { Avatar, Grid, ImageList } from '@mui/material';
-
+import { Grid, ImageList } from '@mui/material';
+import PersonIcon from '@mui/icons-material/Person';
 
 
 
@@ -156,7 +156,7 @@ export default function Master() {
                 <IconButton color="inherit"  onClick={() => window.open("https://github.com/tziea/Full-Stack-Developer/blob/main/README.md", "_blank")}>
                   <GitHubIcon />
                 </IconButton>
-              <Avatar src="/broken-image.jpg" />
+                <PersonIcon/>
             </Grid>
           </Grid>
         </Toolbar>

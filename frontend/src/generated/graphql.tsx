@@ -32,7 +32,7 @@ export type Company = {
   phone: Scalars['String'];
   type: Scalars['String'];
   updated_at: Scalars['DateTime'];
-  workers: Array<Worker>;
+  workers?: Maybe<Array<Worker>>;
 };
 
 export type LoginResponse = {
@@ -118,6 +118,16 @@ export type Worker = {
   username: Scalars['String'];
 };
 
+export type CreateCompanyMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CreateCompanyMutation = { __typename?: 'Mutation', createCompany: { __typename?: 'Company', id: string, company: string, industry: string, catch_phrase: string, logo: string, type: string } };
+
+export type CreateWorkerMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CreateWorkerMutation = { __typename?: 'Mutation', createWorker: { __typename?: 'Worker', id: string, username: string, name: string, surname: string, email: string, avatar: string, gender: string, phone: string, birthdate: any, others: any, disabled: boolean, created_at: any, updated_at: any } };
+
 export type LoginMutationVariables = Exact<{
   password: Scalars['String'];
   usercode: Scalars['String'];
@@ -129,14 +139,100 @@ export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'Lo
 export type CompaniesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CompaniesQuery = { __typename?: 'Query', companies: Array<{ __typename?: 'Company', id: string, company: string, industry: string, catch_phrase: string, logo: string, type: string, phone: string, others: any, workers: Array<{ __typename?: 'Worker', id: string, username: string }> }> };
+export type CompaniesQuery = { __typename?: 'Query', companies: Array<{ __typename?: 'Company', id: string, company: string, industry: string, catch_phrase: string, logo: string, type: string, phone: string, others: any, disabled: boolean, created_at: any, updated_at: any, workers?: Array<{ __typename?: 'Worker', id: string, username: string, name: string, surname: string, email: string, avatar: string, gender: string, phone: string, birthdate: any, others: any, disabled: boolean, created_at: any, updated_at: any }> | null }> };
 
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type UsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id: string, usercode: string, password: string, name: string, disabled: boolean }> };
 
+export type WorkersQueryVariables = Exact<{ [key: string]: never; }>;
 
+
+export type WorkersQuery = { __typename?: 'Query', workers: Array<{ __typename?: 'Worker', id: string, username: string, name: string, surname: string, email: string, avatar: string, gender: string, phone: string, birthdate: any, others: any, disabled: boolean, created_at: any, updated_at: any, company?: { __typename?: 'Company', id: string, company: string, industry: string, catch_phrase: string, logo: string, type: string, phone: string, others: any, disabled: boolean, created_at: any, updated_at: any } | null }> };
+
+
+export const CreateCompanyDocument = gql`
+    mutation CreateCompany {
+  createCompany {
+    id
+    company
+    industry
+    catch_phrase
+    logo
+    type
+  }
+}
+    `;
+export type CreateCompanyMutationFn = Apollo.MutationFunction<CreateCompanyMutation, CreateCompanyMutationVariables>;
+
+/**
+ * __useCreateCompanyMutation__
+ *
+ * To run a mutation, you first call `useCreateCompanyMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCompanyMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCompanyMutation, { data, loading, error }] = useCreateCompanyMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCreateCompanyMutation(baseOptions?: Apollo.MutationHookOptions<CreateCompanyMutation, CreateCompanyMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCompanyMutation, CreateCompanyMutationVariables>(CreateCompanyDocument, options);
+      }
+export type CreateCompanyMutationHookResult = ReturnType<typeof useCreateCompanyMutation>;
+export type CreateCompanyMutationResult = Apollo.MutationResult<CreateCompanyMutation>;
+export type CreateCompanyMutationOptions = Apollo.BaseMutationOptions<CreateCompanyMutation, CreateCompanyMutationVariables>;
+export const CreateWorkerDocument = gql`
+    mutation CreateWorker {
+  createWorker {
+    id
+    username
+    name
+    surname
+    email
+    avatar
+    gender
+    phone
+    birthdate
+    others
+    disabled
+    created_at
+    updated_at
+  }
+}
+    `;
+export type CreateWorkerMutationFn = Apollo.MutationFunction<CreateWorkerMutation, CreateWorkerMutationVariables>;
+
+/**
+ * __useCreateWorkerMutation__
+ *
+ * To run a mutation, you first call `useCreateWorkerMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateWorkerMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createWorkerMutation, { data, loading, error }] = useCreateWorkerMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCreateWorkerMutation(baseOptions?: Apollo.MutationHookOptions<CreateWorkerMutation, CreateWorkerMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateWorkerMutation, CreateWorkerMutationVariables>(CreateWorkerDocument, options);
+      }
+export type CreateWorkerMutationHookResult = ReturnType<typeof useCreateWorkerMutation>;
+export type CreateWorkerMutationResult = Apollo.MutationResult<CreateWorkerMutation>;
+export type CreateWorkerMutationOptions = Apollo.BaseMutationOptions<CreateWorkerMutation, CreateWorkerMutationVariables>;
 export const LoginDocument = gql`
     mutation Login($password: String!, $usercode: String!) {
   login(password: $password, usercode: $usercode) {
@@ -182,10 +278,24 @@ export const CompaniesDocument = gql`
     workers {
       id
       username
+      name
+      surname
+      email
+      avatar
+      gender
+      phone
+      birthdate
+      others
+      disabled
+      created_at
+      updated_at
     }
     type
     phone
     others
+    disabled
+    created_at
+    updated_at
   }
 }
     `;
@@ -254,3 +364,62 @@ export function useUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<User
 export type UsersQueryHookResult = ReturnType<typeof useUsersQuery>;
 export type UsersLazyQueryHookResult = ReturnType<typeof useUsersLazyQuery>;
 export type UsersQueryResult = Apollo.QueryResult<UsersQuery, UsersQueryVariables>;
+export const WorkersDocument = gql`
+    query Workers {
+  workers {
+    id
+    username
+    name
+    surname
+    email
+    avatar
+    gender
+    phone
+    birthdate
+    others
+    company {
+      id
+      company
+      industry
+      catch_phrase
+      logo
+      type
+      phone
+      others
+      disabled
+      created_at
+      updated_at
+    }
+    disabled
+    created_at
+    updated_at
+  }
+}
+    `;
+
+/**
+ * __useWorkersQuery__
+ *
+ * To run a query within a React component, call `useWorkersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWorkersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useWorkersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useWorkersQuery(baseOptions?: Apollo.QueryHookOptions<WorkersQuery, WorkersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<WorkersQuery, WorkersQueryVariables>(WorkersDocument, options);
+      }
+export function useWorkersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<WorkersQuery, WorkersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<WorkersQuery, WorkersQueryVariables>(WorkersDocument, options);
+        }
+export type WorkersQueryHookResult = ReturnType<typeof useWorkersQuery>;
+export type WorkersLazyQueryHookResult = ReturnType<typeof useWorkersLazyQuery>;
+export type WorkersQueryResult = Apollo.QueryResult<WorkersQuery, WorkersQueryVariables>;

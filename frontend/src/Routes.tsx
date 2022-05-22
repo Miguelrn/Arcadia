@@ -1,4 +1,4 @@
-import { lazy, Suspense, useContext, useState } from 'react';
+import { lazy, Suspense, useContext, useEffect, useState } from 'react';
 import './App.css'
 import {
   BrowserRouter as Router,
@@ -24,8 +24,22 @@ const httpLink = createHttpLink({
 });
 
 export default function AppRoutes() {
-  const [accessToken, setAccessToken] = useState<string>(localStorage.getItem('accessToken') || '');
-  // const {accessToken, setAccessToken} = useContext(UserContext);
+  const [accessToken, setAccessToken] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    fetch(`http://localhost:${import.meta.env.VITE_BACKEND_PORT}/refresh_token`, {
+      method: 'POST',
+      credentials: 'include'
+    }).then(async res => {
+      const token = await res.json();
+      if(token.ok === true)
+        setAccessToken(token.accesstoken);
+      setLoading(false);
+    })
+  }, [])
+
+  if(loading) return <CircularProgress />
 
   const authLink = setContext((_, { headers }) => {
     return {
