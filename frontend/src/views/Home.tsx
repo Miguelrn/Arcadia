@@ -1,7 +1,11 @@
-import { Breadcrumbs, Link } from "@mui/material";
+import { Breadcrumbs, Card, CardContent, Grid, Link, Typography } from "@mui/material";
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import BusinessIcon from '@mui/icons-material/Business';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import LanguageIcon from '@mui/icons-material/Language';
 
 export default function Home() {
+    const icons = [<BusinessIcon />,<AccountBoxIcon />,<LanguageIcon />];
     return (
         <>
             <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
@@ -11,7 +15,24 @@ export default function Home() {
                     </Link>
                 ]}
             </Breadcrumbs>
-            <h3>sweet Home</h3>
+            <Grid container justifyContent={'center'} direction={'row'} spacing={2} alignItems={'center'} sx={{height: '80vh'}}>
+                {
+                    ["companies", "workers", "worldmap"].map((item, index) => {
+                        return <Link key={index} color="inherit" underline="hover" href={'/'+item}>   
+                                    <Card sx={{m:1, width:'250px', p:1}} >
+                                        <CardContent sx={{}}>
+                                            <Grid container justifyContent={'center'} direction={'column'} spacing={2} alignItems={'center'} sx={{height: '15vh'}}>
+                                                <Typography variant="h6" component="div">
+                                                    {icons[index]}{item}
+                                                </Typography>
+                                            </Grid>
+                                        </CardContent>
+                                    </Card>
+                                </Link>
+
+                    })
+                }
+            </Grid>
         </>
 
     )
