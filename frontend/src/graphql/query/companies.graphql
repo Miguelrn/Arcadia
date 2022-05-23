@@ -1,0 +1,30 @@
+query Companies {
+  companies {
+    id
+    company
+    industry
+    catch_phrase
+    logo
+    workers {
+      id
+      username
+      name
+      surname
+      email
+      avatar
+      gender
+      phone
+      birthdate
+      others
+      disabled
+      created_at
+      updated_at
+    }
+    type
+    phone
+    others
+    disabled
+    created_at
+    updated_at
+  }
+}

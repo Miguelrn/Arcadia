@@ -1,0 +1,3 @@
+mutation AsignCompany($companyId: Float!, $userId: Float!) {
+  asignCompany(companyId: $companyId, userId: $userId)
+}

@@ -1,0 +1,45 @@
+version: "3.8"
+
+services:
+  arcadia_db:
+    image: postgres
+    ports:
+      - "5432:${DB_PORT}"
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_DB=${DB_SCHEMA}
+    volumes:
+      - pgdata:/var/lib/postgres/data
+      - pgdata:/var/lib/postgresql/data
+    expose:
+      - "5432"
+  backend: 
+    image: arcadia-backend-dev:latest
+    container_name: backend_arcadia_dev
+    depends_on:
+      - arcadia_db
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports: 
+      - "3001:${BACKEND_PORT}"
+    volumes:
+      - ./backend:/backend
+      - /backend/node_modules # anonymous volume for node_modules only
+  frontend:
+    image: arcadia-frontend-dev:latest
+    container_name: arcadia_frontend_dev
+    depends_on:
+      - backend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:${FRONTEND_PORT}"
+    volumes:
+      - ./frontend:/frontend
+      - /frontend/node_modules # anonymous volume for node_modules only
+volumes:
+  pgdata:
+
