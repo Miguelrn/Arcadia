@@ -1,3 +1,4 @@
+# Jose Miguel Rodriguez Navarro
 Full stack Arcadia, in this project will be defined a basic structure frontend and backend as long as dockerfile to test in a local enviroment. All the project is defined using only **typescript** as main language
 
 ## Database
