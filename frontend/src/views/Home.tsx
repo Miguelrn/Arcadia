@@ -4,6 +4,11 @@ import BusinessIcon from '@mui/icons-material/Business';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import LanguageIcon from '@mui/icons-material/Language';
 
+/**
+ * Home page, /
+ * Unprotected page
+ * @returns 
+ */
 export default function Home() {
     const icons = [<BusinessIcon />,<AccountBoxIcon />,<LanguageIcon />];
     return (

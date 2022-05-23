@@ -67,6 +67,12 @@ export class UserResolver {
     };    
   }
 
+  /**
+   * new users registration
+   * @param usercode 
+   * @param password plain text password
+   * @returns 
+   */
   @Mutation(() => Boolean)
   async register(
     @Arg("usercode", () => String) usercode: string,

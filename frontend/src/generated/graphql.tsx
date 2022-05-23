@@ -46,6 +46,7 @@ export type Mutation = {
   createCompany: Company;
   createUser: User;
   createWorker: Worker;
+  deleteJob: Scalars['Boolean'];
   disableCompany: Scalars['Boolean'];
   disableWorker: Scalars['Boolean'];
   login: LoginResponse;
@@ -65,6 +66,12 @@ export type MutationCreateUserArgs = {
   name: Scalars['String'];
   password: Scalars['String'];
   usercode: Scalars['String'];
+};
+
+
+export type MutationDeleteJobArgs = {
+  companyId: Scalars['Float'];
+  workerId: Scalars['Float'];
 };
 
 
@@ -170,6 +177,14 @@ export type Worker = {
   username: Scalars['String'];
 };
 
+export type AsignCompanyMutationVariables = Exact<{
+  companyId: Scalars['Float'];
+  userId: Scalars['Float'];
+}>;
+
+
+export type AsignCompanyMutation = { __typename?: 'Mutation', asignCompany: boolean };
+
 export type CreateCompanyMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -179,6 +194,14 @@ export type CreateWorkerMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type CreateWorkerMutation = { __typename?: 'Mutation', createWorker: { __typename?: 'Worker', id: string, username: string, name: string, surname: string, email: string, avatar: string, gender: string, phone: string, birthdate: any, others: any, disabled: boolean, created_at: any, updated_at: any } };
+
+export type DeleteJobMutationVariables = Exact<{
+  companyId: Scalars['Float'];
+  workerId: Scalars['Float'];
+}>;
+
+
+export type DeleteJobMutation = { __typename?: 'Mutation', deleteJob: boolean };
 
 export type DisableCompanyMutationVariables = Exact<{
   companyId: Scalars['Float'];
@@ -254,7 +277,7 @@ export type WorkerByIdQueryVariables = Exact<{
 }>;
 
 
-export type WorkerByIdQuery = { __typename?: 'Query', workerById?: { __typename?: 'Worker', id: string, username: string, name: string, surname: string, email: string, avatar: string, gender: string, phone: string, birthdate: any, others: any, disabled: boolean, created_at: any, updated_at: any } | null };
+export type WorkerByIdQuery = { __typename?: 'Query', workerById?: { __typename?: 'Worker', id: string, username: string, name: string, surname: string, email: string, avatar: string, gender: string, phone: string, birthdate: any, others: any, disabled: boolean, created_at: any, updated_at: any, company?: { __typename?: 'Company', id: string, company: string, industry: string, catch_phrase: string, logo: string, type: string, phone: string, others: any, disabled: boolean, created_at: any, updated_at: any, workers?: Array<{ __typename?: 'Worker', id: string, username: string, name: string, surname: string, email: string, avatar: string, gender: string, phone: string, birthdate: any, others: any, disabled: boolean, created_at: any, updated_at: any }> | null } | null } | null };
 
 export type WorkersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -262,6 +285,38 @@ export type WorkersQueryVariables = Exact<{ [key: string]: never; }>;
 export type WorkersQuery = { __typename?: 'Query', workers: Array<{ __typename?: 'Worker', id: string, username: string, name: string, surname: string, email: string, avatar: string, gender: string, phone: string, birthdate: any, others: any, disabled: boolean, created_at: any, updated_at: any, company?: { __typename?: 'Company', id: string, company: string, industry: string, catch_phrase: string, logo: string, type: string, phone: string, others: any, disabled: boolean, created_at: any, updated_at: any } | null }> };
 
 
+export const AsignCompanyDocument = gql`
+    mutation AsignCompany($companyId: Float!, $userId: Float!) {
+  asignCompany(companyId: $companyId, userId: $userId)
+}
+    `;
+export type AsignCompanyMutationFn = Apollo.MutationFunction<AsignCompanyMutation, AsignCompanyMutationVariables>;
+
+/**
+ * __useAsignCompanyMutation__
+ *
+ * To run a mutation, you first call `useAsignCompanyMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAsignCompanyMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [asignCompanyMutation, { data, loading, error }] = useAsignCompanyMutation({
+ *   variables: {
+ *      companyId: // value for 'companyId'
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useAsignCompanyMutation(baseOptions?: Apollo.MutationHookOptions<AsignCompanyMutation, AsignCompanyMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AsignCompanyMutation, AsignCompanyMutationVariables>(AsignCompanyDocument, options);
+      }
+export type AsignCompanyMutationHookResult = ReturnType<typeof useAsignCompanyMutation>;
+export type AsignCompanyMutationResult = Apollo.MutationResult<AsignCompanyMutation>;
+export type AsignCompanyMutationOptions = Apollo.BaseMutationOptions<AsignCompanyMutation, AsignCompanyMutationVariables>;
 export const CreateCompanyDocument = gql`
     mutation CreateCompany {
   createCompany {
@@ -343,6 +398,38 @@ export function useCreateWorkerMutation(baseOptions?: Apollo.MutationHookOptions
 export type CreateWorkerMutationHookResult = ReturnType<typeof useCreateWorkerMutation>;
 export type CreateWorkerMutationResult = Apollo.MutationResult<CreateWorkerMutation>;
 export type CreateWorkerMutationOptions = Apollo.BaseMutationOptions<CreateWorkerMutation, CreateWorkerMutationVariables>;
+export const DeleteJobDocument = gql`
+    mutation DeleteJob($companyId: Float!, $workerId: Float!) {
+  deleteJob(companyId: $companyId, workerId: $workerId)
+}
+    `;
+export type DeleteJobMutationFn = Apollo.MutationFunction<DeleteJobMutation, DeleteJobMutationVariables>;
+
+/**
+ * __useDeleteJobMutation__
+ *
+ * To run a mutation, you first call `useDeleteJobMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteJobMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteJobMutation, { data, loading, error }] = useDeleteJobMutation({
+ *   variables: {
+ *      companyId: // value for 'companyId'
+ *      workerId: // value for 'workerId'
+ *   },
+ * });
+ */
+export function useDeleteJobMutation(baseOptions?: Apollo.MutationHookOptions<DeleteJobMutation, DeleteJobMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteJobMutation, DeleteJobMutationVariables>(DeleteJobDocument, options);
+      }
+export type DeleteJobMutationHookResult = ReturnType<typeof useDeleteJobMutation>;
+export type DeleteJobMutationResult = Apollo.MutationResult<DeleteJobMutation>;
+export type DeleteJobMutationOptions = Apollo.BaseMutationOptions<DeleteJobMutation, DeleteJobMutationVariables>;
 export const DisableCompanyDocument = gql`
     mutation DisableCompany($companyId: Float!) {
   disableCompany(companyId: $companyId)
@@ -695,6 +782,34 @@ export const WorkerByIdDocument = gql`
     disabled
     created_at
     updated_at
+    company {
+      id
+      company
+      industry
+      catch_phrase
+      logo
+      type
+      phone
+      others
+      disabled
+      created_at
+      updated_at
+      workers {
+        id
+        username
+        name
+        surname
+        email
+        avatar
+        gender
+        phone
+        birthdate
+        others
+        disabled
+        created_at
+        updated_at
+      }
+    }
   }
 }
     `;

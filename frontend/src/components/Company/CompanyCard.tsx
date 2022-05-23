@@ -13,40 +13,51 @@ interface companyProps {
     phone: string;
     others?: Object;
     workers: number;
+    small: boolean; // display less info if true
+    selected: boolean; // display a selected border
 }
 
 export default function CompanyCard(props: companyProps) {
 
-return <>
-        <Card>
+    return <>
+        <Card sx={{ border: (props.selected) ? '2px solid #00205b' : '' }}>
             <CardMedia
                 component="img"
-                height="100"
+                height={100}
                 image={props.logo}
                 alt={props.company_name}
             />
-            <CardContent>
+            <CardContent sx={{ minHeight: '100px' }}>
                 <Grid container justifyContent={'space-between'} direction={'row'}>
                     <Grid item xs>
                         <Typography gutterBottom variant="h6" component="div">
                             {props.company_name}
                         </Typography>
-                        <Typography variant="caption" color="text.secondary">
-                            <FactoryIcon fontSize={'small'}/>{props.type}
-                        </Typography>
+                        {
+                            !props.small && <Typography variant="caption" color="text.secondary">
+                                <FactoryIcon fontSize={'small'} />{props.type}
+                            </Typography>
+                        }
                     </Grid>
                 </Grid>
 
-                <Typography variant="body2" color="text.secondary">
-                    {props.catch_phrase}
-                </Typography>
+                {
+                    !props.small && <Typography variant="body2" color="text.secondary">
+                        {props.catch_phrase}
+                    </Typography>
+                }
             </CardContent>
+
             <CardActions>
                 <Grid container justifyContent={'space-between'} direction={'row'} alignContent={'center'}>
                     <Grid item><PhoneAndroidIcon />{props.phone} </Grid>
-                    <Grid item>{props.workers}<AccessibilityNewIcon /></Grid>
+                    {!props.small && <Grid item>{props.workers}<AccessibilityNewIcon /></Grid>}
                 </Grid>
             </CardActions>
+
         </Card>
     </>
+}
+CompanyCard.defaultProps = {
+    selected: false
 }

@@ -5,7 +5,7 @@ import Modal from '@mui/material/Modal';
 import { Divider, Grid, TextField } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import UpdateIcon from '@mui/icons-material/Update';
-import { useCompanyByIdQuery, useDisableCompanyMutation, useUpdateCompanyMutation } from '../generated/graphql';
+import { useCompanyByIdQuery, useDisableCompanyMutation, useUpdateCompanyMutation } from '../../generated/graphql';
 import { useEffect, useState } from 'react';
 
 const style = {

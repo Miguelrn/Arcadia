@@ -15,7 +15,7 @@ export class WorkerResolver {
     @Query(() => [Worker])
     @UseMiddleware(isAuth)
     async workers(): Promise<Worker[]> {
-        return await Worker.find({ where: { disabled: false } });
+        return await Worker.find({ where: { disabled: false }, relations: ['company'] });
     }
 
     /**
@@ -27,7 +27,7 @@ export class WorkerResolver {
     async workerById(
         @Arg("workerId", () => Number) workerId: number,
     ): Promise<Worker | null> {
-        return await Worker.findOne({ where: { id: workerId, disabled: false } });
+        return await Worker.findOne({ where: { id: workerId, disabled: false }, relations: ['company', 'company.workers'] });
     }
 
     /**
@@ -91,13 +91,13 @@ export class WorkerResolver {
         @Arg("companyId", () => Number) companyId: number,
     ): Promise<boolean> {
         const user = await Worker.findOne({ where: { id: userId }, relations: ['company'] });
-        const project = await Company.findOne({ where: { id: companyId }, relations: ['workers'] });
-        if (!user || !project) throw new Error('User or company does not exits');
+        const company = await Company.findOne({ where: { id: companyId }, relations: ['workers'] });
+        if (!user || !company) throw new Error('User or company does not exits');
 
         if(user.company !== null) throw new Error('User already have a job, please leave your actual job before join a new company!')
 
-        project.workers?.push(user); 
-        await project.save();
+        company.workers?.push(user); 
+        await company.save();
         return true;
     }
 
@@ -164,5 +164,29 @@ export class WorkerResolver {
         await user.save();
         return true;
     }
+
+    /**
+     * remove company of user
+     * @param workerId worker id
+     * @param companyId company id
+     * @returns 
+     */
+        @Mutation(() => Boolean)
+        @UseMiddleware(isAuth)
+        async deleteJob(
+            @Arg("workerId", () => Number) workerId: number,
+            @Arg("companyId", () => Number) companyId: number,
+        ): Promise<boolean> {
+            const worker = await Worker.findOne({ where: { id: workerId, company: {id: companyId} }, relations: ['company'] });
+            const company = await Company.findOne({ where: { id: companyId }, relations: ['workers'] });
+            if (!worker || !company) throw new Error('User or company does not exits');
+
+            const workerIndex = company.workers.findIndex(w => w.id === worker.id);
+            company.workers.splice(workerIndex, 1);
+
+            await company.save();
+
+            return true;
+        }
 
 }

@@ -2,10 +2,15 @@ import { useEffect, useState } from "react";
 import { Breadcrumbs, Button, CircularProgress, FormControlLabel, FormGroup, Grid, Link, Pagination, Switch } from "@mui/material";
 import { useCreateWorkerMutation, useWorkersQuery, Worker } from "../generated/graphql"
 import AddIcon from '@mui/icons-material/Add';
-import WorkerCard from "../components/WorkerCard";
+import WorkerCard from "../components/Worker/WorkerCard";
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import WorkerCardForm from "../components/WorkerCardForm";
+import WorkerCardForm from "../components/Worker/WorkerCardForm";
 
+/**
+ * Workers page, /workers
+ * Protected page
+ * @returns 
+ */
 export default function Workers() {
     const [createWorker] = useCreateWorkerMutation();
     const [page, setPage] = useState<number>(1);
@@ -20,7 +25,7 @@ export default function Workers() {
         let endData = page * 8;
         if (data !== undefined && data?.workers.length > 0) {
             if (jobless)
-                setWorkerList(data?.workers.filter(w => w.company !== null).slice(initData, endData));
+                setWorkerList(data?.workers.filter(w => w.company === null).slice(initData, endData));
             else
                 setWorkerList(data?.workers.slice(initData, endData));
         }

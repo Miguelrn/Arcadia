@@ -1,17 +1,21 @@
-import { Grid, Breadcrumbs, Link, Typography, Button } from "@mui/material";
+import { Key, useState, useEffect } from "react";
+import { Grid, Breadcrumbs, Link, Typography } from "@mui/material";
 import { ComposableMap, Geographies, Geography, Marker } from "react-simple-maps";
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import geoData from './worldMap.json';
-import { Key, useState, useEffect } from "react";
 import { useCompaniesQuery } from "../generated/graphql";
 import CircleIcon from '@mui/icons-material/Circle';
 
-
+/**
+ * WorldMap page, /worldmap
+ * Protected page.
+ * @returns 
+ */
 export default function WorldMap() {
     const { data, loading, error, refetch } = useCompaniesQuery();
     const [markerCompanies, setMarkerCompanies] = useState<{ markerOffset: number, name: Key, coordinates: [number, number] }[]>([]);
     const [markerWorker, setMarkerWorker] = useState<{ markerOffset: number, name: Key, coordinates: [number, number] }[]>([]);
-    // TODO: dos listas, companias seleccionadas y empleados, dos colores
+
     useEffect(() => {
         if (!loading && data !== undefined) {
             let aux_companies: { markerOffset: number, name: Key, coordinates: [number, number] }[] = [];
@@ -66,14 +70,21 @@ export default function WorldMap() {
                     </div>
                 </div>
             </Grid>
-            <ComposableMap>
+            <ComposableMap
+                projectionConfig={{
+                    scale: 145
+                }}
+                width={900}
+                height={400}
+                style={{width: '100%',height:'auto'}}
+            >
                 <Geographies geography={geoData}>
                     {({ geographies }) =>
-                        geographies.map(geo => <Geography key={geo.rsmKey} geography={geo} />)
+                        geographies.map(geo => <Geography key={geo.rsmKey} geography={geo} style={{default: {fill: '#d6d6da', }, hover: {fill: '#d6d6da'}, pressed: {fill: '#d6d6da'}}}/>)
                     }
                 </Geographies>
                 {markerCompanies.map(({ name, coordinates, markerOffset }) => (
-                    <Marker key={name} coordinates={coordinates}>
+                    <Marker key={name} coordinates={coordinates} >
                         <circle r={2} fill="#F00" stroke="#fff" strokeWidth={1} />
                         <text
                             textAnchor="middle"

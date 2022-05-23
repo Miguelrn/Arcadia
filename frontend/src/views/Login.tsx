@@ -16,9 +16,13 @@ import { useLoginMutation } from '../generated/graphql';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../UserContext';
 
-
 const theme = createTheme();
 
+/**
+ * Login page, /login
+ * unauthorized user will be redirect to this page if try to visit protected pages.
+ * @returns 
+ */
 export default function Login() {
     const [signin] = useLoginMutation();
     const { setAccessToken } = useContext(UserContext)

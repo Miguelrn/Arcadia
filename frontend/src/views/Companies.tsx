@@ -1,12 +1,24 @@
 import { useEffect, useState } from "react";
 import { Breadcrumbs, Button, CircularProgress, Grid, Link, Pagination } from "@mui/material";
-import CompanyCard from "../components/CompanyCard";
+import CompanyCard from "../components/Company/CompanyCard";
 import { Company, useCompaniesQuery, useCreateCompanyMutation } from "../generated/graphql"
 import AddIcon from '@mui/icons-material/Add';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import CompanyCardForm from "../components/CompanyCardForm";
+import CompanyCardForm from "../components/Company/CompanyCardForm";
 
-export default function Companies() {
+interface CompaniesProps {
+    small: boolean
+}
+
+/**
+ * Company page, /companies
+ * this page its protected and only users with valid token will be able to visit
+ * @param props {
+ *  small: display smaller card of companie
+ * }
+ * @returns jsx with the current companies (not disabled!)
+ */
+export default function Companies(props: CompaniesProps) {
     const [createCompany] = useCreateCompanyMutation();
     const [page, setPage] = useState<number>(1);
     const [companyList, setCompanyList] = useState<Company[]>([]);
@@ -65,6 +77,7 @@ export default function Companies() {
                                 workers={company.workers?.length||0}
                                 others={company.others}
                                 key={company.id}
+                                small={props.small}
                             />
                         </Grid>
                             
@@ -80,3 +93,8 @@ export default function Companies() {
         </>
     )
 }
+
+Companies.propTypes = {
+    small: false,
+    selected: false,
+};
