@@ -14,11 +14,11 @@ class LoginResponse {
 @Resolver()
 export class UserResolver {
   /**
-   * 
+   * Get the actually list of users of the server
    * @returns List of users
    */
   @Query(() => [User])
-  @UseMiddleware(isAuth)
+  // @UseMiddleware(isAuth)
   async users(): Promise<User[]> {
     return await User.find();
   }
@@ -67,6 +67,12 @@ export class UserResolver {
     };    
   }
 
+  /**
+   * new users registration
+   * @param usercode 
+   * @param password plain text password
+   * @returns 
+   */
   @Mutation(() => Boolean)
   async register(
     @Arg("usercode", () => String) usercode: string,

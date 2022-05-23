@@ -44,7 +44,7 @@ export class Worker extends BaseEntity {
 
     @Field(() => GraphQLJSONObject)
     @Column({ type: 'jsonb'})
-    others?: Object; // just to store rest of the user data, just in case
+    others?: object; // just to store rest of the user data, just in case
 
     @Field(() => Company, {nullable: true})
     @ManyToOne(() => Company, (company) => company.workers)

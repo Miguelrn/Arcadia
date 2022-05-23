@@ -4,7 +4,7 @@ import 'dotenv/config';
 import { Response } from "express";
 
 export const createAccessToken = (user: User) => {
-    return sign({userId: user.id}, process.env.ACCESS_TOKEN!, {expiresIn: "15m"})
+    return sign({userId: user.id}, process.env.ACCESS_TOKEN!, {expiresIn: "60m"})
 }
 
 export const createRefreshToken = (user: User) => {

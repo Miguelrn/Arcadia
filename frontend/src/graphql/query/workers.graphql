@@ -1,0 +1,30 @@
+query Workers {
+  workers {
+    id
+    username
+    name
+    surname
+    email
+    avatar
+    gender
+    phone
+    birthdate
+    others
+    company {
+      id
+      company
+      industry
+      catch_phrase
+      logo
+      type
+      phone
+      others
+      disabled
+      created_at
+      updated_at
+    }
+    disabled
+    created_at
+    updated_at
+  }
+}

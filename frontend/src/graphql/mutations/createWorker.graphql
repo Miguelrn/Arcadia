@@ -1,0 +1,17 @@
+mutation CreateWorker {
+  createWorker {
+    id
+    username
+    name
+    surname
+    email
+    avatar
+    gender
+    phone
+    birthdate
+    others
+    disabled
+    created_at
+    updated_at
+  }
+}

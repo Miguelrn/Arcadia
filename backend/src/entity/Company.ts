@@ -38,7 +38,7 @@ export class Company extends BaseEntity {
     @Column({ type: 'jsonb'})
     others?: object; 
 
-    @Field(() => [Worker])
+    @Field(() => [Worker], {nullable: true})
     @OneToMany(() => Worker, (worker) => worker.company)
     workers: Worker[];
 

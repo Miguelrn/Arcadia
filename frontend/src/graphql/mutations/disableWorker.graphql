@@ -1,0 +1,3 @@
+mutation DisableWorker($workerId: Float!) {
+  disableWorker(workerId: $workerId)
+}

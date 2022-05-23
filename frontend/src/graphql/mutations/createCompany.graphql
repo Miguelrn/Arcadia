@@ -1,0 +1,10 @@
+mutation CreateCompany {
+  createCompany {
+    id
+    company
+    industry
+    catch_phrase
+    logo
+    type
+  }
+}
