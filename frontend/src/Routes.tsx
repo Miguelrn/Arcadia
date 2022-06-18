@@ -1,4 +1,4 @@
-import { lazy, Suspense, useContext, useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import './App.css'
 import {
   BrowserRouter as Router,
@@ -14,6 +14,7 @@ const WorldMap = lazy(() => import('./views/WorlMap'));
 const ProtectedRoute = lazy(() => import('./components/ProtectedRoute'));
 const Companies = lazy(() => import('./views/Companies'));
 const Workers = lazy(() => import('./views/Workers'));
+
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { ApolloProvider } from '@apollo/react-hooks';
@@ -74,7 +75,7 @@ export default function AppRoutes() {
             />
             <Route path="/companies" element={
               <Suspense fallback={<CircularProgress />}>
-                <ProtectedRoute component={Companies} />
+                <ProtectedRoute component={Companies} small={false}/>
               </Suspense>
             }
             />

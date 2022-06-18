@@ -8,13 +8,14 @@ import jwt_decode, { JwtPayload } from "jwt-decode";
 // import PagePermissions from '../Permissions/PagePermissions'
 
 type ProtectedRouteProps = {
-  component: ElementType
+  component: ElementType,
+  small?: boolean
 }
 
 export default function ProtectedRoute({component: Component, ...props}: ProtectedRouteProps) {
     // TODO: sacar las credenciales y comprobar que son validas, en caso de serlo guardar en context el id del user que se saca del payload
     const {accessToken} = useContext(UserContext);
-
+    
     if (!accessToken) return (<Login />)
 
     let decoded = jwt_decode<JwtPayload>(accessToken)

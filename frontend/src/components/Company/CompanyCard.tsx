@@ -18,7 +18,6 @@ interface companyProps {
 }
 
 export default function CompanyCard(props: companyProps) {
-
     return <>
         <Card sx={{ border: (props.selected) ? '2px solid #00205b' : '' }}>
             <CardMedia

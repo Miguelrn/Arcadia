@@ -14,7 +14,7 @@ interface CompaniesProps {
  * Company page, /companies
  * this page its protected and only users with valid token will be able to visit
  * @param props {
- *  small: display smaller card of companie
+ *  small: display smaller card of company
  * }
  * @returns jsx with the current companies (not disabled!)
  */
@@ -94,7 +94,6 @@ export default function Companies(props: CompaniesProps) {
     )
 }
 
-Companies.propTypes = {
-    small: false,
-    selected: false,
-};
+// Companies.propTypes = {
+//     small: false
+// };
