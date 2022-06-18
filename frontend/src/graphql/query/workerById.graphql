@@ -1,45 +1,45 @@
 query workerById($workerId: Float!) {
-  workerById(workerId: $workerId) {
-    id
-    username
-    name
-    surname
-    email
-    avatar
-    gender
-    phone
-    birthdate
-    others
-    disabled
-    created_at
-    updated_at
-    company {
-      id
-      company
-      industry
-      catch_phrase
-      logo
-      type
-      phone
-      others
-      disabled
-      created_at
-      updated_at
-      workers {
-        id
-        username
-        name
-        surname
-        email
-        avatar
-        gender
-        phone
-        birthdate
-        others
-        disabled
-        created_at
-        updated_at
-      }
-    }
-  }
+	workerById(workerId: $workerId) {
+		id
+		username
+		name
+		surname
+		email
+		avatar
+		gender
+		phone
+		birthdate
+		others
+		disabled
+		created_at
+		updated_at
+		company {
+			id
+			company
+			industry
+			catch_phrase
+			logo
+			type
+			phone
+			others
+			disabled
+			created_at
+			updated_at
+			workers {
+				id
+				username
+				name
+				surname
+				email
+				avatar
+				gender
+				phone
+				birthdate
+				others
+				disabled
+				created_at
+				updated_at
+			}
+		}
+	}
 }

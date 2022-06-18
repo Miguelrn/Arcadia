@@ -1,21 +1,21 @@
 mutation UpdateCompany(
-    $others: String!, 
-    $phone: String!, 
-    $type: String!, 
-    $logo: String!, 
-    $catchPhrase: String!, 
-    $industry: String!, 
-    $companyName: String!, 
-    $companyId: Float!
+	$others: String!
+	$phone: String!
+	$type: String!
+	$logo: String!
+	$catchPhrase: String!
+	$industry: String!
+	$companyName: String!
+	$companyId: Float!
 ) {
-  updateCompany(
-      others: $others, 
-      phone: $phone, 
-      type: $type, 
-      logo: $logo, 
-      catch_phrase: $catchPhrase, 
-      industry: $industry, 
-      companyName: $companyName, 
-      companyId: $companyId
-    )
+	updateCompany(
+		others: $others
+		phone: $phone
+		type: $type
+		logo: $logo
+		catch_phrase: $catchPhrase
+		industry: $industry
+		companyName: $companyName
+		companyId: $companyId
+	)
 }

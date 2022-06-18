@@ -1,15 +1,15 @@
 query CompanyById($companyId: Float!) {
-  companyById(companyId: $companyId) {
-    id
-    company
-    industry
-    catch_phrase
-    logo
-    type
-    phone
-    others
-    disabled
-    created_at
-    updated_at
-  }
+	companyById(companyId: $companyId) {
+		id
+		company
+		industry
+		catch_phrase
+		logo
+		type
+		phone
+		others
+		disabled
+		created_at
+		updated_at
+	}
 }

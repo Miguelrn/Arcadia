@@ -1,5 +1,5 @@
 mutation Login($password: String!, $usercode: String!) {
-  login(password: $password, usercode: $usercode) {
-    accessToken
-  }
+	login(password: $password, usercode: $usercode) {
+		accessToken
+	}
 }

@@ -1,25 +1,25 @@
 mutation UpdateWorker(
-    $others: String!, 
-    $birthdate: String!, 
-    $phone: String!, 
-    $gender: String!, 
-    $avatar: String!, 
-    $email: String!, 
-    $surname: String!, 
-    $name: String!, 
-    $username: String!, 
-    $workerId: Float!
+	$others: String!
+	$birthdate: String!
+	$phone: String!
+	$gender: String!
+	$avatar: String!
+	$email: String!
+	$surname: String!
+	$name: String!
+	$username: String!
+	$workerId: Float!
 ) {
-  updateWorker(
-      others: $others, 
-      birthdate: $birthdate, 
-      phone: $phone, 
-      gender: $gender, 
-      avatar: $avatar, 
-      email: $email, 
-      surname: $surname, 
-      name: $name, 
-      username: $username, 
-      workerId: $workerId
-    )
+	updateWorker(
+		others: $others
+		birthdate: $birthdate
+		phone: $phone
+		gender: $gender
+		avatar: $avatar
+		email: $email
+		surname: $surname
+		name: $name
+		username: $username
+		workerId: $workerId
+	)
 }
