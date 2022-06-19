@@ -1,2 +1,2 @@
 dist
-src/generated
+src\generated\graphql.tsx
