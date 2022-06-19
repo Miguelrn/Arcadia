@@ -11,3 +11,6 @@ generates:
       withHOC: false
       withComponents: false
       withHooks: true
+    hooks:
+      afterAllFileWrite:
+        - eslint --fix
