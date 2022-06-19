@@ -10,7 +10,7 @@ import LanguageIcon from '@mui/icons-material/Language';
  * @returns
  */
 export default function Home() {
-	const icons = [<BusinessIcon />, <AccountBoxIcon />, <LanguageIcon />];
+	const icons = [<BusinessIcon key={1} />, <AccountBoxIcon key={2} />, <LanguageIcon key={3} />];
 	return (
 		<>
 			<Breadcrumbs separator={<NavigateNextIcon fontSize='small' />} aria-label='breadcrumb'>

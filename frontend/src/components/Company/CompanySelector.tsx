@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { Button, CircularProgress, Grid, Pagination } from '@mui/material';
 import CompanyCard from './CompanyCard';
 import { useCompaniesQuery, Company, useAsignCompanyMutation } from '../../generated/graphql';
@@ -24,8 +24,8 @@ export default function CompanySelector(props: CompanySelectorProps) {
 	const [id, setId] = useState<string>('-1');
 
 	useEffect(() => {
-		let initData = (page - 1) * 8;
-		let endData = page * 8;
+		const initData = (page - 1) * 8;
+		const endData = page * 8;
 		if (data !== undefined && data?.companies.length > 0) setCompanyList(data?.companies.slice(initData, endData));
 	}, [data, page]);
 
@@ -34,7 +34,7 @@ export default function CompanySelector(props: CompanySelectorProps) {
 	 * @param event
 	 * @param page
 	 */
-	const changePage = (event: React.ChangeEvent<unknown>, page: number) => {
+	const changePage = (event: ChangeEvent<unknown>, page: number) => {
 		setPage(page);
 	};
 
@@ -51,7 +51,7 @@ export default function CompanySelector(props: CompanySelectorProps) {
 		const workerId = Number.parseInt(props.workerId);
 		await hireJob({
 			variables: {
-				companyId: companyId,
+				companyId,
 				userId: workerId,
 			},
 		});

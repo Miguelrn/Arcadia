@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { FormEvent, useContext, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -29,7 +29,7 @@ export default function Login() {
 	const navigate = useNavigate();
 	const [usercode, setUsercode] = useState('');
 	const [password, setPassword] = useState('');
-	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		const auxToken = await signin({ variables: { password, usercode } });
 

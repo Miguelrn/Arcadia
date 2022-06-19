@@ -54,17 +54,17 @@ export default function CompanyCardForm(props: WorkerCardInput) {
 	}, [data]);
 
 	const updateCompany = async () => {
-		const aux_others: string = JSON.stringify(others);
+		const auxOthers: string = JSON.stringify(others);
 		await saveCompany({
 			variables: {
 				companyId: Number.parseInt(props.id),
-				companyName: companyName,
-				industry: industry,
-				catchPhrase: catchPhrase,
-				logo: logo,
-				type: type,
+				companyName,
+				industry,
+				catchPhrase,
+				logo,
+				type,
 				phone,
-				others: aux_others,
+				others: auxOthers,
 			},
 		});
 		props.handleClose(props.id, true);

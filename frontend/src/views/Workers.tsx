@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, ChangeEvent } from 'react';
 import {
 	Breadcrumbs,
 	Button,
@@ -31,15 +31,15 @@ export default function Workers() {
 	const [id, setId] = useState('-1');
 
 	useEffect(() => {
-		let initData = (page - 1) * 8;
-		let endData = page * 8;
+		const initData = (page - 1) * 8;
+		const endData = page * 8;
 		if (data !== undefined && data?.workers.length > 0) {
 			if (jobless) setWorkerList(data?.workers.filter(w => w.company === null).slice(initData, endData));
 			else setWorkerList(data?.workers.slice(initData, endData));
 		}
 	}, [data, page, jobless]);
 
-	const changePage = (event: React.ChangeEvent<unknown>, page: number) => {
+	const changePage = (event: ChangeEvent<unknown>, page: number) => {
 		setPage(page);
 	};
 

@@ -4,16 +4,16 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { UserContext } from './UserContext';
 import CircularProgress from '@mui/material/CircularProgress';
 
+import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+import { ApolloProvider } from '@apollo/react-hooks';
+
 const Home = lazy(() => import('./views/Home'));
 const Login = lazy(() => import('./views/Login'));
 const WorldMap = lazy(() => import('./views/WorlMap'));
 const ProtectedRoute = lazy(() => import('./components/ProtectedRoute'));
 const Companies = lazy(() => import('./views/Companies'));
 const Workers = lazy(() => import('./views/Workers'));
-
-import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
-import { ApolloProvider } from '@apollo/react-hooks';
 
 const httpLink = createHttpLink({
 	uri: `http://localhost:${import.meta.env.VITE_BACKEND_PORT}/graphql`,

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, ChangeEvent } from 'react';
 import { Breadcrumbs, Button, CircularProgress, Grid, Link, Pagination } from '@mui/material';
 import CompanyCard from '../components/Company/CompanyCard';
 import { Company, useCompaniesQuery, useCreateCompanyMutation } from '../generated/graphql';
@@ -27,12 +27,12 @@ export default function Companies(props: CompaniesProps) {
 	const [id, setId] = useState('-1');
 
 	useEffect(() => {
-		let initData = (page - 1) * 8;
-		let endData = page * 8;
+		const initData = (page - 1) * 8;
+		const endData = page * 8;
 		if (data !== undefined && data?.companies.length > 0) setCompanyList(data?.companies.slice(initData, endData));
 	}, [data, page]);
 
-	const changePage = (event: React.ChangeEvent<unknown>, page: number) => {
+	const changePage = (event: ChangeEvent<unknown>, page: number) => {
 		setPage(page);
 	};
 

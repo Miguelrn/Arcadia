@@ -82,7 +82,7 @@ export default function WorkerCardForm(props: WorkerCardProp) {
 	}, [data]);
 
 	const updateWorker = async () => {
-		const aux_others: string = JSON.stringify(others);
+		const auxOthers: string = JSON.stringify(others);
 		await saveWorker({
 			variables: {
 				workerId: Number.parseInt(props.id),
@@ -94,7 +94,7 @@ export default function WorkerCardForm(props: WorkerCardProp) {
 				gender,
 				phone,
 				birthdate,
-				others: aux_others,
+				others: auxOthers,
 			},
 		});
 		props.handleClose(props.id, true);
@@ -114,7 +114,7 @@ export default function WorkerCardForm(props: WorkerCardProp) {
 		const worker = Number.parseInt(id);
 		await removeJob({
 			variables: {
-				companyId: companyId,
+				companyId,
 				workerId: worker,
 			},
 		});

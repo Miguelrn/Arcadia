@@ -12,7 +12,7 @@ import CircleIcon from '@mui/icons-material/Circle';
  * @returns
  */
 export default function WorldMap() {
-	const { data, loading, error, refetch } = useCompaniesQuery();
+	const { data, loading } = useCompaniesQuery();
 	const [markerCompanies, setMarkerCompanies] = useState<
 		{ markerOffset: number; name: Key; coordinates: [number, number] }[]
 	>([]);
@@ -22,21 +22,21 @@ export default function WorldMap() {
 
 	useEffect(() => {
 		if (!loading && data !== undefined) {
-			let aux_companies: {
+			let auxCompanies: {
 				markerOffset: number;
 				name: Key;
 				coordinates: [number, number];
 			}[] = [];
-			let aux_worker: {
+			const auxWorker: {
 				markerOffset: number;
 				name: Key;
 				coordinates: [number, number];
 			}[] = [];
 
-			aux_companies = data?.companies.map(company => {
+			auxCompanies = data?.companies.map(company => {
 				if (company.workers !== null && company.workers !== undefined) {
 					company.workers.forEach(worker => {
-						aux_worker.push({
+						auxWorker.push({
 							markerOffset: 10,
 							name: worker.username,
 							coordinates: [worker.others.address.coordinates.lat, worker.others.address.coordinates.lng],
@@ -50,8 +50,8 @@ export default function WorldMap() {
 					coordinates: [company.others.latitude, company.others.longitude],
 				};
 			});
-			setMarkerCompanies(aux_companies);
-			setMarkerWorker(aux_worker);
+			setMarkerCompanies(auxCompanies);
+			setMarkerWorker(auxWorker);
 		}
 	}, [data]);
 
