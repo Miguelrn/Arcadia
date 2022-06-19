@@ -1,0 +1,39 @@
+name: Deployment Pipeline
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+    types: [opened, synchronize]
+
+jobs:
+  deploy_be:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: cd backend && yarn
+      - name: Lint
+        run: yarn lint
+
+  deploy_fe:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: cd frontend && yarn
+      - name: Lint
+        run: yarn lint
+      - name: build
+        run: yarn build
