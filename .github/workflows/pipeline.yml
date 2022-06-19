@@ -20,7 +20,7 @@ jobs:
       - name: Install dependencies
         run: cd backend && yarn
       - name: Lint
-        run: yarn lint
+        run: cd backend && yarn lint
 
   deploy_fe:
     runs-on: ubuntu-22.04
@@ -34,6 +34,6 @@ jobs:
       - name: Install dependencies
         run: cd frontend && yarn
       - name: Lint
-        run: yarn lint
+        run: cd frontend && yarn lint
       - name: build
-        run: yarn build
+        run: cd frontend && yarn build
