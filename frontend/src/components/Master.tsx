@@ -19,7 +19,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import ListItemText from '@mui/material/ListItemText';
 import AppRoutes from '../Routes';
 import Link from '@mui/material/Link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Grid, ImageList } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 
