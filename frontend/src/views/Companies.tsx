@@ -53,6 +53,7 @@ export default function Companies(props: CompaniesProps) {
 
 	return (
 		<>
+			<Typography variant={'h1'}>{count}</Typography>
 			<Grid container justifyContent={'space-between'} direction={'row'}>
 				<Breadcrumbs separator={<NavigateNextIcon fontSize='small' />} aria-label='breadcrumb'>
 					{[
