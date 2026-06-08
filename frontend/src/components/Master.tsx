@@ -117,15 +117,21 @@ const Drawer = styled(MuiDrawer, {
 
 export default function Master() {
 	const [open, setOpen] = useState(false);
+	const [count, setCount] = useState(0);
 
 	const handleToggleOpen = () => {
 		setOpen(!open);
 	};
 
+	useEffect(() => {
+	    setCount((prev) => prev + 1);
+	  });
+
 	return (
 		<Box sx={{ display: 'flex' }}>
 			<CssBaseline />
 			<AppBar position='fixed'>
+				<div>{count}</div>
 				<Toolbar>
 					<Grid container direction='row' justifyContent='space-between' alignItems='center'>
 						<Grid item xs={8} container direction='row' justifyContent='space-between' alignItems='center'>
