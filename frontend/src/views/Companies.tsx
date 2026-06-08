@@ -25,12 +25,18 @@ export default function Companies(props: CompaniesProps) {
 	const { data, loading, error, refetch } = useCompaniesQuery();
 	const [open, setOpen] = useState(false);
 	const [id, setId] = useState('-1');
+	const [count, setCount] = useState<number>(0);
 
 	useEffect(() => {
 		const initData = (page - 1) * 8;
 		const endData = page * 8;
 		if (data !== undefined && data?.companies.length > 0) setCompanyList(data?.companies.slice(initData, endData));
 	}, [data, page]);
+
+	// broken useEffect to check react-doctor
+	useEffect(() => {
+		setCount((prev) => prev + 1);
+	});
 
 	const changePage = (event: ChangeEvent<unknown>, page: number) => {
 		setPage(page);
