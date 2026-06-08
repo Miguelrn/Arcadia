@@ -5,6 +5,7 @@ import { Company, useCompaniesQuery, useCreateCompanyMutation } from '../generat
 import AddIcon from '@mui/icons-material/Add';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import CompanyCardForm from '../components/Company/CompanyCardForm';
+import Typography from '@mui/material/Typography';
 
 interface CompaniesProps {
 	small: boolean;
