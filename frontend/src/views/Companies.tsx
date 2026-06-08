@@ -5,6 +5,7 @@ import { Company, useCompaniesQuery, useCreateCompanyMutation } from '../generat
 import AddIcon from '@mui/icons-material/Add';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import CompanyCardForm from '../components/Company/CompanyCardForm';
+import Typography from '@mui/material/Typography';
 
 interface CompaniesProps {
 	small: boolean;
@@ -25,12 +26,18 @@ export default function Companies(props: CompaniesProps) {
 	const { data, loading, error, refetch } = useCompaniesQuery();
 	const [open, setOpen] = useState(false);
 	const [id, setId] = useState('-1');
+	const [count, setCount] = useState<number>(0);
 
 	useEffect(() => {
 		const initData = (page - 1) * 8;
 		const endData = page * 8;
 		if (data !== undefined && data?.companies.length > 0) setCompanyList(data?.companies.slice(initData, endData));
 	}, [data, page]);
+
+	// broken useEffect to check react-doctor
+	useEffect(() => {
+		setCount((prev) => prev + 1);
+	});
 
 	const changePage = (event: ChangeEvent<unknown>, page: number) => {
 		setPage(page);
@@ -47,6 +54,7 @@ export default function Companies(props: CompaniesProps) {
 
 	return (
 		<>
+			<Typography variant={'h1'}>{count}</Typography>
 			<Grid container justifyContent={'space-between'} direction={'row'}>
 				<Breadcrumbs separator={<NavigateNextIcon fontSize='small' />} aria-label='breadcrumb'>
 					{[
